@@ -5,6 +5,10 @@
 // Extract the command line arguments
 const args = process.argv.slice(2);
 console.log('args:', args);
+if (args.length < 2) {
+  console.log("Please, enter at least 2 arguments");
+  process.exit(); // <= allows me to not use an else statement
+}
 
 // Edge case: We need at least 2 arguments.
 
@@ -19,13 +23,27 @@ let total = 0;
 
 for (let arg of args) {
   // Add the arg to the total
-  total += Number(arg);
-  console.log('arg:', arg, "total:", total);
+  // Edge case: If any argument is not a whole number, skip it.
+  // use the modulo operator %
+  // math.floor
+  // Number.isInteger()
+  const convertedNum = Number(arg);
+
+  if (Number.isInteger(convertedNum)) {
+    total += convertedNum;
+  }
+  // Edge case: If any argument is not a number, output an error message.
+  if (isNaN(convertedNum)) {
+    console.log("Please input only numbers");
+    // stop the script
+    // return => return a value out of a function, exits the function (side effect)
+    // return;
+    process.exit(); // <= revealing my intent
+  }
+
+  console.log('arg:', convertedNum, 'total:', total);
 }
 
-// Edge case: If any argument is not a whole number, skip it.
-
-// Edge case: If any argument is not a number, output an error message.
 
 // print the total
-console.log("total", total);
+console.log('total', total);
